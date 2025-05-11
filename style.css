@@ -1,0 +1,133 @@
+@font-face {
+  font-family: 'Pixelify Sans';
+  src: url('fonts/PixelifySans-Regular.ttf') format('truetype');
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #f8e0ff;
+  font-family: 'Pixelify Sans', Arial, sans-serif;
+}
+
+.card {
+  width: 260px;
+  /* background-color: #d5c9ff; */
+  /* border: 3px solid #bcaeff; */
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  padding: 0;
+
+  /* fundo transparente */
+  background-color: rgba(213, 201, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.card-header{
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 2px solid #bcaeff; */
+  padding: 8px;
+  /* background-color: #bcaeff; */
+}
+
+.card-header .title {
+  font-size: 20px;
+}
+
+.card-body {
+  text-align: center;
+}
+
+.weather-icon {
+  position: relative;
+}
+
+.weather-icon .temp {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.weather-icon img {
+  width: 100%;
+  max-width: 180px;
+  image-rendering: pixelated;
+}
+
+.card-footer {
+  margin-top: 12px;
+  background-color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: inset 0 0 5px #aaa;
+}
+
+.card-image-bg {
+  position: relative;
+  background-image: url('images/fundo-background.jpg');
+  background-size: 180%;
+  background-position: center;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.card-image-bg img {
+  width: 150px;
+  image-rendering: pixelated;
+  z-index: 1;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.arrow.left {
+  left: 10px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+input#cat-name {
+  margin-top: 10px;
+  padding: 5px;
+  width: 90%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Pixelify Sans';
+}
+
+button#add-cat {
+  background-color: #bcaeff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Pixelify Sans';
+}

@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Cat Companion",
+  "version": "1.0",
+  "description": "Escolha seu gato e tenha um companheiro no navegador!",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/gato1.png",
+      "48": "images/gato1.png",
+      "128": "images/gato1.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
