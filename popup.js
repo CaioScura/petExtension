@@ -4,6 +4,12 @@ const catImages = [
   'images/gato3.png'
 ];
 
+const catSounds = [
+  'audio/miado.mp3',
+  'audio/gato-rindo.mp3'
+];
+
+
 let currentIndex = 0;
 
 const catImage = document.getElementById('cat-image');
@@ -50,4 +56,13 @@ addCatButton.addEventListener('click', () => {
   container.appendChild(catDiv);
 
   nameInput.value = '';
+  playRandomSound();
+
 });
+
+function playRandomSound() {
+  const randomIndex = Math.floor(Math.random() * catSounds.length);
+  const sound = new Audio(catSounds[randomIndex]);
+  sound.play();
+}
+

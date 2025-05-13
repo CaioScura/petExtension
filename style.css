@@ -67,12 +67,10 @@ body {
 
 .card-footer {
   margin-top: 12px;
-  background-color: #fff;
   padding: 10px;
   text-align: center;
   border-radius: 8px;
   font-weight: bold;
-  box-shadow: inset 0 0 5px #aaa;
 }
 
 .card-image-bg {
@@ -115,12 +113,26 @@ body {
 }
 
 input#cat-name {
-  margin-top: 10px;
-  padding: 5px;
+  padding: 8px 0;
   width: 90%;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border: none;
+  border-bottom: 2px solid #bcaeff;
+  background: transparent;
   font-family: 'Pixelify Sans';
+  font-size: 20px;
+  text-align: center;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input#cat-name::placeholder {
+  color: #999;
+  text-align: center;
+}
+
+input#cat-name:focus {
+  border-bottom-color: #9c89ff;
 }
 
 button#add-cat {
@@ -147,16 +159,18 @@ button#add-cat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(255, 255, 255, 0.5);
-  border: 2px solid #bcaeff;
+  /* background: rgba(255, 255, 255, 0.5);
+  border: 2px solid #bcaeff; */
   border-radius: 10px;
   padding: 5px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  /* backdrop-filter: blur(6px);
+  box-shadow: 0 0 5px rgba(0,0,0,0.2); */
+  animation: float 5s ease-in-out infinite;
 }
 
+
 .selected-cat img {
-  width: 50px;
+  width: 80px;
   height: auto;
   image-rendering: pixelated;
 }
@@ -166,4 +180,48 @@ button#add-cat {
   font-weight: bold;
   font-family: 'Pixelify Sans', sans-serif;
   margin-bottom: 5px;
+}
+
+
+/* zoom */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+
+/* para os lados */
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+
+/* se mover para cima e para baixo */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }

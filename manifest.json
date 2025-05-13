@@ -7,10 +7,15 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/gato1.png",
-      "48": "images/gato1.png",
-      "128": "images/gato1.png"
+      "16": "images/icons/gatoapontando.png",
+      "48": "images/icons/gatoapontando.png",
+      "128": "images/icons/gatoapontando.png"
     }
+  },
+  "icons": {
+    "16": "images/icons/gatoapontando.png",
+    "48": "images/icons/gatoapontando.png",
+    "128": "images/icons/gatoapontando.png"
   },
   "content_scripts": [
     {
