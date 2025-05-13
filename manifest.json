@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Cat Companion",
+  "name": "Cat at",
   "version": "1.0",
-  "description": "Escolha seu gato e tenha um companheiro no navegador!",
-  "permissions": ["storage", "activeTab", "scripting"],
+  "description": "Escolha um gatito para tu",
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

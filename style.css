@@ -75,7 +75,8 @@ body {
 
 .card-image-bg {
   position: relative;
-  background-image: url('images/fundo-background.jpg');
+  /* background-image: url('images/fundo-background.jpg'); */
+  background-image: url('images/background-room-pink.png');
   background-size: 180%;
   background-position: center;
   min-height: 180px;
@@ -188,6 +189,36 @@ button#add-cat {
   margin-top: -4px;
 }
 
+.selected-cat img {
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out 0.1s;
+}
+
+.selected-cat img:hover {
+  transform: scale(1.05);
+}
+
+.cat-name-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.remove-cat {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+  /* margin-left: 10px; */
+}
+
+
+.remove-cat:hover {
+  color: #ff0000;
+}
+
+
 
 /* zoom */
 @keyframes fadeInUp {
@@ -231,3 +262,34 @@ button#add-cat {
     transform: translateY(-10px);
   }
 }
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#cat-image.slide-left {
+  animation: slideInLeft 0.4s ease;
+}
+
+#cat-image.slide-right {
+  animation: slideInRight 0.4s ease;
+}
+
