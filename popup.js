@@ -4,12 +4,6 @@ const catImages = [
   'images/gato3.png'
 ];
 
-const catSounds = [
-  'audio/miado.mp3',
-  'audio/gato-rindo.mp3'
-];
-
-
 let currentIndex = 0;
 
 const catImage = document.getElementById('cat-image');
@@ -48,21 +42,35 @@ addCatButton.addEventListener('click', () => {
   nameEl.classList.add('cat-name');
   nameEl.textContent = name;
 
+  catDiv.appendChild(nameEl);
+
+  // Se for "caio", adiciona "cabeção" abaixo do nome
+  if (name.toLowerCase() === 'megumi') {
+    const subtitle = document.createElement('div');
+    subtitle.classList.add('cat-subtitle');
+    subtitle.textContent = 'cabeção';
+    catDiv.appendChild(subtitle);
+  }
+
   const img = document.createElement('img');
   img.src = catImages[currentIndex];
-
-  catDiv.appendChild(nameEl);
   catDiv.appendChild(img);
+
   container.appendChild(catDiv);
-
   nameInput.value = '';
-  playRandomSound();
 
-});
-
-function playRandomSound() {
-  const randomIndex = Math.floor(Math.random() * catSounds.length);
-  const sound = new Audio(catSounds[randomIndex]);
+  // Toca o som correto
+  let sound;
+  if (name.toLowerCase() === 'megumi') {
+    sound = new Audio('audio/gato-rindo.mp3');
+  } else {
+    sound = new Audio('audio/miado.mp3');
+  }
+  sound.volume = 0.3;
   sound.play();
-}
 
+  setTimeout(() => {
+    sound.pause();
+    sound.currentTime = 0;
+  }, 2000);
+});
