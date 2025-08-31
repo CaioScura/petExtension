@@ -100,16 +100,42 @@ addCatButton.addEventListener('click', () => {
   });
 });
 
+
+//remover gato
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('remove-cat')) {
     const catElement = e.target.closest('.selected-cat');
     const catName = catElement.querySelector('.cat-name').innerText;
 
     if (confirm(`Deseja remover o gato "${catName}" da tela?`)) {
-      catElement.remove();
+      let removeSound;
+
+      if (catName.toLowerCase() === 'megumi') {
+        removeSound = new Audio('audio/death-bong.mp3');
+      } else {
+        removeSound = new Audio('audio/death-bong.mp3');
+      }
+      
+      removeSound.volume = 0.3;
+      removeSound.play().catch(() => {
+        console.log('Não foi possível tocar o som de remoção');
+      });
+      
+
+      setTimeout(() => {
+        catElement.remove();
+      }, 300); 
+      
+
+      setTimeout(() => {
+        removeSound.pause();
+        removeSound.currentTime = 0;
+      }, 2000);
     }
   }
 });
+
+
 
 // Esta função será injetada na aba ativa do navegador
 function showCatInPage(cat) {
