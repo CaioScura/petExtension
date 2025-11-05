@@ -3,7 +3,15 @@
   "name": "Cat at",
   "version": "1.0",
   "description": "Escolha um gatito para tu",
-  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -12,15 +20,31 @@
       "128": "images/icons/gatoapontando.png"
     }
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "images/gato1.png",
+        "images/gato2.png",
+        "images/gato3.png",
+        "audio/*.mp3",
+        "audio/miado.mp3",
+        "audio/gato-rindo.mp3",
+        "audio/death-bong.mp3"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "icons": {
     "16": "images/icons/gatoapontando.png",
     "48": "images/icons/gatoapontando.png",
     "128": "images/icons/gatoapontando.png"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
-    }
-  ]
+  }
 }
