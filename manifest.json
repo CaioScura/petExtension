@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Cat at",
-  "version": "1.0",
+  "name": "Gatos na sua tela",
+  "version": "2.0",
   "description": "Escolha um gatito para tu",
   "permissions": [
     "storage",
@@ -34,6 +34,26 @@
         "images/gato1.png",
         "images/gato2.png",
         "images/gato3.png",
+
+        // imagem padrao
+        "images/img-padrao/gato-preto-sentado.png",
+        "images/img-padrao/gato-branco-sentado.png",
+        "images/img-padrao/gato-siames-sentado.png",
+        "images/img-padrao/gato-brancopreto-sentado.png",
+        // animacao sentado
+        "images/gatos/animation-1/preto.gif",
+        "images/gatos/animation-1/branco.gif",
+        "images/gatos/animation-1/siames.gif",
+        "images/gatos/animation-1/branco-manchas-pretas.gif",
+
+        // amimacao carregado
+        "images/gatos/animation-2/gato-preto-carregado.png",
+        "images/gatos/animation-2/gato-branco-carregado.png",
+        "images/gatos/animation-2/gato-siames-carregado.png",
+        "images/gatos/animation-2/gato-branco-preto-carregado.png",
+
+
+        
         "audio/*.mp3",
         "audio/miado.mp3",
         "audio/gato-rindo.mp3",

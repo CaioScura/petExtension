@@ -1,7 +1,24 @@
 const catImages = [
   'images/gato1.png',
   'images/gato2.png',
-  'images/gato3.png'
+  'images/gato3.png',
+
+// imagem padrao
+        "images/img-padrao/gato-preto-sentado.png",
+        "images/img-padrao/gato-branco-sentado.png",
+        "images/img-padrao/gato-siames-sentado.png",
+        "images/img-padrao/gato-brancopreto-sentado.png",
+        // animacao sentado
+        "images/gatos/animation-1/preto.gif",
+        "images/gatos/animation-1/branco.gif",
+        "images/gatos/animation-1/siames.gif",
+        "images/gatos/animation-1/branco-manchas-pretas.gif",
+
+        // amimacao carregado
+        "images/gatos/animation-2/gato-preto-carregado.png",
+        "images/gatos/animation-2/gato-branco-carregado.png",
+        "images/gatos/animation-2/gato-siames-carregado.png",
+        "images/gatos/animation-2/gato-branco-preto-carregado.png",
 ];
 
 let currentIndex = 0;
@@ -203,7 +220,6 @@ function addCatToPage(cat) {
 
   const wrapper = document.createElement('div');
   wrapper.classList.add('floating-cat');
-  wrapper.classList.add('selected-cat');
   wrapper.dataset.catId = cat.id;
   wrapper.style.position = 'fixed';
   wrapper.style.bottom = '10px';
