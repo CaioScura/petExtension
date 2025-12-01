@@ -133,10 +133,12 @@ addCatButton.addEventListener('click', () => {
       let sound;
       if (name.toLowerCase() === 'megumi') {
         sound = new Audio('audio/gato-rindo.mp3');
+
+        mostrarImagemSusto();
       } else {
         sound = new Audio('audio/miado.mp3');
       }
-      sound.volume = 0.3;
+      sound.volume = 0.4;
       sound.play().catch(() => console.log('Erro ao tocar som'));
 
       setTimeout(() => {
@@ -317,4 +319,49 @@ function removeCatFromPage(catId) {
   if (catElement) {
     catElement.remove();
   }
+}
+
+
+
+// funcao mostrear imagem susto
+function mostrarImagemSusto() {
+  // Criar overlay escuro
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  overlay.style.zIndex = '99999';
+  overlay.style.display = 'flex';
+  overlay.style.justifyContent = 'center';
+  overlay.style.alignItems = 'center';
+  overlay.style.animation = 'fadeIn 0.2s ease';
+
+  const sustos = [
+    'images/susto1.png',
+    'images/susto2.png'
+  ];
+
+  const imagemAleatoria = sustos[Math.floor(Math.random() * sustos.length)];
+
+
+  // Criar imagem de susto
+  const img = document.createElement('img');
+  img.src = imagemAleatoria;
+  img.style.maxWidth = '200%';
+  img.style.maxHeight = '200%';
+  img.style.imageRendering = 'pixelated';
+  img.style.animation = 'zoomIn 0.2s ease';
+
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  setTimeout(() => {
+    overlay.style.animation = 'fadeOut 0.2s ease';
+    setTimeout(() => {
+      overlay.remove();
+    }, 300);
+  }, 1000);
 }
