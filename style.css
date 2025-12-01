@@ -41,12 +41,17 @@ body::before {
 
 .card-header{
   margin: 0;
+  /* border-bottom: 2px solid #bcaeff; */
+  /* background-color: #bcaeff; */
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-bottom: 2px solid #bcaeff; */
-  padding: 8px;
-  /* background-color: #bcaeff; */
+  background-color: rgba(118, 121, 187, 0.3);
+  color: #fefefe;
+  font-weight: 500;
+  font-size: 16px;
+  border-bottom: 2px solid rgba(188, 174, 255, 0.3);
 }
 
 .card-header .title {
@@ -294,7 +299,7 @@ button#add-cat:hover{
 }
 
 .cats-list-header {
-  padding: 12px;
+  padding: 10px;
   text-align: center;
   background-color: rgba(118, 121, 187, 0.3);
   color: #fefefe;
@@ -337,7 +342,7 @@ button#add-cat:hover{
 }
 
 #selected-cats:empty::before {
-  content: "Nenhum gatinho adicionado ainda 😿";
+  content: "Nenhum gatito adicionado ainda 😿 VACILÃO";
   display: block;
   text-align: center;
   color: rgba(254, 254, 254, 0.6);
