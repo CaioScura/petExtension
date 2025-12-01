@@ -301,10 +301,10 @@ function addCatToPage(cat) {
 
   const nameDiv = document.createElement('div');
   nameDiv.style.width = 'auto';
-  nameDiv.style.display = 'flex';
-  nameDiv.style.justifyContent = 'center';
-  nameDiv.style.alignItems = 'center';
-  nameDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
+  // nameDiv.style.display = 'flex';
+  // nameDiv.style.justifyContent = 'center';
+  // nameDiv.style.alignItems = 'center';
+  nameDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
   nameDiv.style.color = '#fefefe';
   nameDiv.style.padding = '5px';
   nameDiv.style.borderRadius = '5px';
@@ -345,65 +345,87 @@ function addCatToPage(cat) {
   wrapper.appendChild(img);
   document.body.appendChild(wrapper);
 
-  // Sistema de drag and drop
+
   let isDragging = false;
-  let offsetX, offsetY;
+let hasMoved = false; // NOVA FLAG
+let offsetX, offsetY;
 
-  wrapper.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    isDragging = true;
-    wrapper.style.cursor = 'grabbing';
-    
-    // Trocar para animação de carregado
-    img.src = animationCarried;
-    
-    const rect = wrapper.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    
-    wrapper.style.zIndex = '99999';
+wrapper.addEventListener('mousedown', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  isDragging = true;
+  hasMoved = false; // Reset da flag
+  wrapper.style.cursor = 'grabbing';
+  
+  // Trocar para animação de carregado
+  img.src = animationCarried;
+  
+  const rect = wrapper.getBoundingClientRect();
+  offsetX = e.clientX - rect.left;
+  offsetY = e.clientY - rect.top;
+  
+  wrapper.style.zIndex = '99999';
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  
+  e.preventDefault();
+  e.stopPropagation();
+  
+  hasMoved = true; // Marcou que houve movimento
+  
+  const x = e.clientX - offsetX;
+  const y = e.clientY - offsetY;
+  
+  wrapper.style.left = `${x}px`;
+  wrapper.style.top = `${y}px`;
+  wrapper.style.bottom = 'auto';
+  wrapper.style.right = 'auto';
+});
+
+document.addEventListener('mouseup', (e) => {
+  if (!isDragging) return;
+  
+  e.preventDefault();
+  e.stopPropagation();
+  
+  isDragging = false;
+  wrapper.style.cursor = 'grab';
+  wrapper.style.zIndex = '9999';
+  
+  // Voltar para animação idle
+  img.src = animationIdle;
+
+  // Salvar posição no storage
+  chrome.storage.local.get(['catPositions'], (result) => {
+    const positions = result.catPositions || {};
+    positions[cat.id] = {
+      left: wrapper.style.left,
+      top: wrapper.style.top
+    };
+    chrome.storage.local.set({ catPositions: positions });
   });
+});
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const x = e.clientX - offsetX;
-    const y = e.clientY - offsetY;
-    
-    wrapper.style.left = `${x}px`;
-    wrapper.style.top = `${y}px`;
-    wrapper.style.bottom = 'auto';
-    wrapper.style.right = 'auto';
-  });
-
-  document.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    
-    e.preventDefault();
-    e.stopPropagation();
-    
-    isDragging = false;
-    wrapper.style.cursor = 'grab';
-    wrapper.style.zIndex = '9999';
-    
-    // Voltar para animação idle
-    img.src = animationIdle;
-
-    // Salvar posição no storage
-    chrome.storage.local.get(['catPositions'], (result) => {
-      const positions = result.catPositions || {};
-      positions[cat.id] = {
-        left: wrapper.style.left,
-        top: wrapper.style.top
-      };
-      chrome.storage.local.set({ catPositions: positions });
-    });
-  });
+// Adicionar som ao clicar no gato (SÓ se não arrastou)
+wrapper.addEventListener('click', (e) => {
+  // Não tocar som se arrastou
+  if (hasMoved) {
+    hasMoved = false; // Reset
+    return;
+  }
+  
+  const audio = new Audio(chrome.runtime.getURL('audio/miado.mp3'));
+  audio.volume = 0.4;
+  audio.play().catch(() => console.log('Erro ao tocar miado'));
+  
+  setTimeout(() => {
+    audio.pause();
+    audio.currentTime = 0;
+  }, 2000);
+});
 }
 
 // Função que será injetada na página para REMOVER gato

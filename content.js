@@ -33,10 +33,10 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
 
         const nameDiv = document.createElement('div');
         nameDiv.style.width = 'auto';
-        nameDiv.style.display = 'flex';
-        nameDiv.style.justifyContent = 'center';
-        nameDiv.style.alignItems = 'center';
-        nameDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
+        // nameDiv.style.display = 'flex';
+        // nameDiv.style.justifyContent = 'center';
+        // nameDiv.style.alignItems = 'center';
+        nameDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
         nameDiv.style.color = '#fefefe';
         nameDiv.style.padding = '5px';
         nameDiv.style.borderRadius = '5px';
@@ -74,15 +74,18 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         wrapper.appendChild(img);
         document.body.appendChild(wrapper);
 
-        // Sistema de drag and drop
+
         let isDragging = false;
+        let hasMoved = false;
         let offsetX, offsetY;
+
 
         wrapper.addEventListener('mousedown', (e) => {
           e.preventDefault();
           e.stopPropagation();
           
           isDragging = true;
+          hasMoved = false; // Reset da flag
           wrapper.style.cursor = 'grabbing';
           
           // Trocar para animação de carregado
@@ -100,6 +103,8 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           
           e.preventDefault();
           e.stopPropagation();
+          
+          hasMoved = true; // Marcou que houve movimento
           
           const x = e.clientX - offsetX;
           const y = e.clientY - offsetY;
@@ -123,15 +128,37 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           // Voltar para animação idle
           img.src = chrome.runtime.getURL(animationIdle);
 
-          // Salvar posição no storage
+          // Salvar posição no storage e notificar outras abas
+          const newPosition = {
+            left: wrapper.style.left,
+            top: wrapper.style.top
+          };
+
           chrome.storage.local.get(['catPositions'], (result) => {
             const positions = result.catPositions || {};
-            positions[cat.id] = {
-              left: wrapper.style.left,
-              top: wrapper.style.top
-            };
-            chrome.storage.local.set({ catPositions: positions });
+            positions[cat.id] = newPosition;
+            chrome.storage.local.set({ catPositions: positions }, () => {
+              console.log('Posição salva:', cat.id, newPosition);
+            });
           });
+        });
+
+        // Adicionar som ao clicar no gato (SÓ se não arrastou)
+        wrapper.addEventListener('click', (e) => {
+          // Não tocar som se arrastou
+          if (hasMoved) {
+            hasMoved = false; // Reset
+            return;
+          }
+          
+          const audio = new Audio(chrome.runtime.getURL('audio/miado.mp3'));
+          audio.volume = 0.4;
+          audio.play().catch(() => console.log('Erro ao tocar miado'));
+          
+          setTimeout(() => {
+            audio.pause();
+            audio.currentTime = 0;
+          }, 2000);
         });
       });
     });
