@@ -10,7 +10,9 @@
     "tabs"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "http://*/*",
+    "https://*/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -31,9 +33,9 @@
     {
       "resources": [
         "images/*.png",
-        "images/gato1.png",
-        "images/gato2.png",
-        "images/gato3.png",
+        // "images/gato1.png",
+        // "images/gato2.png",
+        // "images/gato3.png",
 
         // imagem padrao
         "images/img-padrao/gato-preto-sentado.png",
@@ -41,10 +43,10 @@
         "images/img-padrao/gato-siames-sentado.png",
         "images/img-padrao/gato-brancopreto-sentado.png",
         // animacao sentado
-        "images/gatos/animation-1/preto.gif",
-        "images/gatos/animation-1/branco.gif",
-        "images/gatos/animation-1/siames.gif",
-        "images/gatos/animation-1/branco-manchas-pretas.gif",
+        "images/gatos/animation-1/preto.png",
+        "images/gatos/animation-1/branco.png",
+        "images/gatos/animation-1/siames.png",
+        "images/gatos/animation-1/branco-manchas-pretas.png",
 
         // amimacao carregado
         "images/gatos/animation-2/gato-preto-carregado.png",

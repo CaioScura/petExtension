@@ -7,9 +7,22 @@ body {
   display: flex;
   justify-content: center;
   margin: 0;
-  padding: 20px;
-  background-color: #f8e0ff;
+  padding: 12px;
+  /* background-color: #f8e0ff; */
+  background-color: #dfd1ff;
   font-family: 'Pixelify Sans', Arial, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+
+  background: url("images/fundo-background.jpg") center/cover no-repeat;
+  filter: blur(12px);
+  transform: scale(1.1);
+
+  z-index: -1;
 }
 
 .card {
@@ -29,7 +42,7 @@ body {
 .card-header{
   margin: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   /* border-bottom: 2px solid #bcaeff; */
   padding: 8px;
@@ -38,6 +51,20 @@ body {
 
 .card-header .title {
   font-size: 20px;
+  /* color: #7679bb; */
+  color: #fefefe;
+  font-weight: 500;
+}
+
+.left-arrow{
+  color: #7679bb;
+  width: 8rem;
+  transform: scaleX(-1);
+}
+
+.right-arrow{
+  color: #7679bb;
+  width: 8rem;
 }
 
 .card-body {
@@ -87,31 +114,23 @@ body {
 
 
 .card-image-bg img {
-  width: 150px;
+  width: 170px;
   image-rendering: pixelated;
   z-index: 1;
 }
 
 .arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: white;
-  font-size: 24px;
-  padding: 10px;
+  /* position: absolute; */
+  /* top: 50%; */
+  /* transform: translateY(-50%); */
+  /* color: white; */
+  /* font-size: 24px; */
+  /* padding: 10px; */
   border-radius: 50%;
   cursor: pointer;
   z-index: 2;
 }
 
-.arrow.left {
-  left: 10px;
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.arrow.right {
-  right: 10px;
-}
 
 input#cat-name {
   padding: 8px 0;
@@ -137,12 +156,17 @@ input#cat-name:focus {
 }
 
 button#add-cat {
-  background-color: #bcaeff;
+  background-color: #7679bb;
+  color: #fefefe;
   border: none;
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
   font-family: 'Pixelify Sans';
+}
+
+button#add-cat:hover{
+  background-color: #b89aff;
 }
 
 #selected-cats {
@@ -196,6 +220,14 @@ button#add-cat {
 
 .selected-cat img:hover {
   transform: scale(1.05);
+}
+
+.cat-name-popup{
+    width: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
 }
 
 .cat-name-container {

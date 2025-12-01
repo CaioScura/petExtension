@@ -1,10 +1,12 @@
 // Verificar se a API do Chrome está disponível
+// Verificar se a API do Chrome está disponível
 if (typeof chrome !== 'undefined' && chrome.storage) {
 
   // Função para carregar e renderizar os gatos
   function loadCats() {
     chrome.storage.local.get(['allCats'], (result) => {
       const cats = result.allCats || [];
+      console.log('Carregando gatos no content.js:', cats); // Para debug
 
       cats.forEach((cat, index) => {
         // Verificar se o gato já existe na página
@@ -20,6 +22,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         wrapper.style.cursor = 'grab';
 
         const nameDiv = document.createElement('div');
+
         nameDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
         nameDiv.style.color = 'white';
         nameDiv.style.padding = '5px';
@@ -31,9 +34,11 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         const img = document.createElement('img');
         img.src = chrome.runtime.getURL(cat.image);
         img.alt = cat.name;
-        img.style.width = '100px';
+        img.style.width = '120px';
         img.style.height = 'auto';
         img.style.display = 'block';
+        
+        console.log('URL no content.js:', img.src); // Para debug
 
         wrapper.appendChild(nameDiv);
         wrapper.appendChild(img);
@@ -52,6 +57,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
   // Escutar mudanças no storage
   chrome.storage.onChanged.addListener((changes, namespace) => {
     if (namespace === 'local' && changes.allCats) {
+      console.log('Storage mudou:', changes.allCats); // Para debug
       // Remover gatos antigos
       document.querySelectorAll('.floating-cat').forEach(cat => cat.remove());
       // Carregar novos gatos

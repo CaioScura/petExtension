@@ -1,25 +1,28 @@
+// const catImages = [
+//   'images/gato1.png',
+//   'images/gato2.png',
+//   'images/gato3.png',
+// ];
+
 const catImages = [
-  'images/gato1.png',
-  'images/gato2.png',
-  'images/gato3.png',
-
-// imagem padrao
-        "images/img-padrao/gato-preto-sentado.png",
-        "images/img-padrao/gato-branco-sentado.png",
-        "images/img-padrao/gato-siames-sentado.png",
-        "images/img-padrao/gato-brancopreto-sentado.png",
-        // animacao sentado
-        "images/gatos/animation-1/preto.gif",
-        "images/gatos/animation-1/branco.gif",
-        "images/gatos/animation-1/siames.gif",
-        "images/gatos/animation-1/branco-manchas-pretas.gif",
-
-        // amimacao carregado
-        "images/gatos/animation-2/gato-preto-carregado.png",
-        "images/gatos/animation-2/gato-branco-carregado.png",
-        "images/gatos/animation-2/gato-siames-carregado.png",
-        "images/gatos/animation-2/gato-branco-preto-carregado.png",
+  {
+    preview: 'images/img-padrao/gato-preto-sentado.png',
+    animation: 'images/gatos/animation-1/preto.png'
+  },
+  {
+    preview: 'images/img-padrao/gato-branco-sentado.png',
+    animation: 'images/gatos/animation-1/branco.png'
+  },
+  {
+    preview: 'images/img-padrao/gato-siames-sentado.png',
+    animation: 'images/gatos/animation-1/siames.png'
+  },
+  {
+    preview: 'images/img-padrao/gato-brancopreto-sentado.png',
+    animation: 'images/gatos/animation-1/branco-manchas-pretas.png'
+  }
 ];
+
 
 let currentIndex = 0;
 
@@ -39,7 +42,7 @@ if (typeof chrome === 'undefined' || !chrome.storage) {
 function updateCatImage(direction) {
   catImage.classList.remove('slide-left', 'slide-right');
   void catImage.offsetWidth;
-  catImage.src = catImages[currentIndex];
+  catImage.src = catImages[currentIndex].preview;
   catImage.classList.add(direction === 'left' ? 'slide-left' : 'slide-right');
 }
 
@@ -94,7 +97,7 @@ function displayCatInPopup(cat) {
   }
 
   const img = document.createElement('img');
-  img.src = cat.image;
+  img.src = cat.preview || cat.image;  // Usa preview no popup, se não tiver usa a animação
   catDiv.appendChild(img);
 
   container.appendChild(catDiv);
@@ -109,9 +112,10 @@ addCatButton.addEventListener('click', () => {
   }
 
   const newCat = {
-    id: Date.now().toString(), // ID único para cada gato
+    id: Date.now().toString(),
     name: name,
-    image: catImages[currentIndex]
+    preview: catImages[currentIndex].preview,
+    image: catImages[currentIndex].animation  // Salva a animação para usar na página
   };
 
   // Buscar todos os gatos salvos
@@ -142,19 +146,25 @@ addCatButton.addEventListener('click', () => {
 
       // Injetar gato em TODAS as abas
       chrome.tabs.query({}, (tabs) => {
-        tabs.forEach(tab => {
-          // Verificar se a aba pode receber scripts (não são páginas do chrome://)
-          if (tab.url && !tab.url.startsWith('chrome://') && !tab.url.startsWith('chrome-extension://')) {
-            chrome.scripting.executeScript({
-              target: { tabId: tab.id },
-              func: addCatToPage,
-              args: [newCat]
-            }).catch(() => {
-              console.log(`Não foi possível adicionar gato na aba ${tab.id}`);
-            });
-          }
-        });
+  tabs.forEach(tab => {
+    // Verificar se a aba pode receber scripts (não são páginas do chrome://)
+    if (tab.url && !tab.url.startsWith('chrome://') && !tab.url.startsWith('chrome-extension://')) {
+      // Resolver a URL da imagem ANTES de injetar
+      const catWithResolvedUrl = {
+        ...newCat,
+        image: chrome.runtime.getURL(newCat.image)
+      };
+      
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: addCatToPage,
+        args: [catWithResolvedUrl]
+      }).catch((error) => {
+        console.log(`Não foi possível adicionar gato na aba ${tab.id}:`, error);
       });
+    }
+  });
+});
     });
   });
 });
@@ -215,7 +225,8 @@ loadSavedCats();
 
 // Função que será injetada na página para ADICIONAR gato
 function addCatToPage(cat) {
-  // Verificar se já existe
+  console.log('Adicionando gato:', cat);
+
   if (document.querySelector(`[data-cat-id="${cat.id}"]`)) return;
 
   const wrapper = document.createElement('div');
@@ -226,11 +237,15 @@ function addCatToPage(cat) {
   wrapper.style.right = `${10 + (document.querySelectorAll('.floating-cat').length * 110)}px`;
   wrapper.style.zIndex = '9999';
   wrapper.style.cursor = 'grab';
-  wrapper.draggable = true;
 
   const nameDiv = document.createElement('div');
+  nameDiv.style.width = '3em';
+  nameDiv.style.display = 'flex';
+  nameDiv.style.justifyContent = 'center';
+  nameDiv.style.alignItems = 'center';
+  nameDiv.style.justifySelf = 'center';
   nameDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
-  nameDiv.style.color = 'white';
+  nameDiv.style.color = '#fefefe';
   nameDiv.style.padding = '5px';
   nameDiv.style.borderRadius = '5px';
   nameDiv.style.fontSize = '12px';
@@ -238,11 +253,13 @@ function addCatToPage(cat) {
   nameDiv.textContent = cat.name;
 
   const img = document.createElement('img');
-  img.src = chrome.runtime.getURL(cat.image);
+  img.src = cat.image;
   img.alt = cat.name;
-  img.style.width = '100px';
+  img.style.width = '120px';
   img.style.height = 'auto';
   img.style.display = 'block';
+  
+  console.log('URL da imagem:', img.src);
 
   wrapper.appendChild(nameDiv);
   wrapper.appendChild(img);
