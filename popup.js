@@ -239,7 +239,7 @@ function addCatToPage(cat) {
   wrapper.style.cursor = 'grab';
 
   const nameDiv = document.createElement('div');
-  nameDiv.style.width = '3em';
+  nameDiv.style.width = 'auto';
   nameDiv.style.display = 'flex';
   nameDiv.style.justifyContent = 'center';
   nameDiv.style.alignItems = 'center';
