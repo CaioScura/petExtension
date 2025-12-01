@@ -23,6 +23,8 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
 
         const nameDiv = document.createElement('div');
 
+
+
         nameDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
         nameDiv.style.color = 'white';
         nameDiv.style.padding = '5px';

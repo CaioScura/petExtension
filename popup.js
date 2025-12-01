@@ -223,6 +223,51 @@ document.addEventListener('click', function (e) {
 // Carregar gatos ao abrir o popup
 loadSavedCats();
 
+
+
+
+
+// Função para toggle (minimizar/maximizar) a lista de gatos
+function initializeToggleCatsList() {
+  const toggleBtn = document.getElementById('toggle-cats-list');
+  const catsListContainer = document.querySelector('.cats-list-container');
+  const iconMinimize = toggleBtn.querySelector('.icon-minimize');
+  const iconMaximize = toggleBtn.querySelector('.icon-maximize');
+
+  // Verificar se há estado salvo
+  chrome.storage.local.get(['catsListMinimized'], (result) => {
+    if (result.catsListMinimized) {
+      catsListContainer.classList.add('minimized');
+      iconMinimize.style.display = 'none';
+      iconMaximize.style.display = 'block';
+    }
+  });
+
+  toggleBtn.addEventListener('click', () => {
+    const isMinimized = catsListContainer.classList.toggle('minimized');
+    
+    if (isMinimized) {
+      // Minimizado - mostrar ícone de maximizar
+      iconMinimize.style.display = 'none';
+      iconMaximize.style.display = 'block';
+    } else {
+      // Maximizado - mostrar ícone de minimizar
+      iconMinimize.style.display = 'block';
+      iconMaximize.style.display = 'none';
+    }
+
+    // Salvar estado
+    chrome.storage.local.set({ catsListMinimized: isMinimized });
+  });
+}
+
+// Inicializar toggle da lista
+initializeToggleCatsList();
+
+
+
+
+
 // Função que será injetada na página para ADICIONAR gato
 function addCatToPage(cat) {
   console.log('Adicionando gato:', cat);
