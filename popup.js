@@ -5,22 +5,47 @@
 // ];
 
 const catImages = [
+  //gato preto
   {
     preview: 'images/img-padrao/gato-preto-sentado.png',
     animation: 'images/gatos/animation-1/preto.png'
   },
+
+  //gato branco
   {
     preview: 'images/img-padrao/gato-branco-sentado.png',
     animation: 'images/gatos/animation-1/branco.png'
   },
+
+  //gato siames
   {
     preview: 'images/img-padrao/gato-siames-sentado.png',
     animation: 'images/gatos/animation-1/siames.png'
   },
+
+  //gato branco e preto
   {
     preview: 'images/img-padrao/gato-brancopreto-sentado.png',
     animation: 'images/gatos/animation-1/branco-manchas-pretas.png'
-  }
+  },
+
+  //gato branco manchas laranjas e pretas
+  {
+    preview: 'images/img-padrao/gato-branco-mancha-laranja-preto-sentado.png',
+    animation: 'images/gatos/animation-1/gato-branco-mancha-laranja-preto.png'
+  },
+
+  //gato laranja
+  {
+    preview: 'images/img-padrao/gato-laranja-sentado.png',
+    animation: 'images/gatos/animation-1/gato-laranja.png'
+  },
+
+  //gato branco costas malhada cinza
+  {
+    preview: 'images/img-padrao/branco-malhado-cinza.png',
+    animation: 'images/gatos/animation-1/branco-malhado-cinza.png'
+  },
 ];
 
 
@@ -32,6 +57,8 @@ const rightArrow = document.querySelector('.arrow.right');
 const addCatButton = document.getElementById('add-cat');
 const nameInput = document.getElementById('cat-name');
 const container = document.getElementById('selected-cats');
+
+
 
 // Verificar se a API do Chrome está disponível
 if (typeof chrome === 'undefined' || !chrome.storage) {
@@ -56,11 +83,13 @@ rightArrow.addEventListener('click', () => {
   updateCatImage('right');
 });
 
-// Carregar gatos salvos ao abrir o popup
+
+
+//carrega os gatos salvos no popup
 function loadSavedCats() {
   chrome.storage.local.get(['allCats'], (result) => {
     const cats = result.allCats || [];
-    container.innerHTML = ''; // Limpar container
+    container.innerHTML = '';
 
     cats.forEach(cat => {
       displayCatInPopup(cat);
@@ -68,7 +97,9 @@ function loadSavedCats() {
   });
 }
 
-// Exibir gato no popup
+
+
+//exibe o gato no popup
 function displayCatInPopup(cat) {
   const catDiv = document.createElement('div');
   catDiv.classList.add('selected-cat');
@@ -97,13 +128,15 @@ function displayCatInPopup(cat) {
   }
 
   const img = document.createElement('img');
-  img.src = cat.preview || cat.image;  // Usa preview no popup, se não tiver usa a animação
+  img.src = cat.preview || cat.image; 
   catDiv.appendChild(img);
 
   container.appendChild(catDiv);
 }
 
-// Adicionar gato
+
+
+//adiciona os gatos
 addCatButton.addEventListener('click', () => {
   const name = nameInput.value.trim();
   if (!name) {
@@ -115,21 +148,22 @@ addCatButton.addEventListener('click', () => {
     id: Date.now().toString(),
     name: name,
     preview: catImages[currentIndex].preview,
-    image: catImages[currentIndex].animation  // Salva a animação para usar na página
+    image: catImages[currentIndex].animation
   };
 
-  // Buscar todos os gatos salvos
+  
+  //busca todos os gatos salvos
   chrome.storage.local.get(['allCats'], (result) => {
     const cats = result.allCats || [];
     cats.push(newCat);
 
-    // Salvar array atualizado
+
     chrome.storage.local.set({ allCats: cats }, () => {
-      // Adicionar gato no popup
+      //adiciona o gato no popup
       displayCatInPopup(newCat);
       nameInput.value = '';
 
-      // Tocar som
+      //toca o audio
       let sound;
       if (name.toLowerCase() === 'megumi') {
         sound = new Audio('audio/gato-rindo.mp3');
@@ -146,11 +180,14 @@ addCatButton.addEventListener('click', () => {
         sound.currentTime = 0;
       }, 2000);
 
-      // Injetar gato em TODAS as abas
+      //gatos em todas as abas
       chrome.tabs.query({}, (tabs) => {
   tabs.forEach(tab => {
-    // Verificar se a aba pode receber scripts (não são páginas do chrome://)
+
+
+    //verifica se a aba pode receber scripts(páginas do chrome:// nao pode receber)
     if (tab.url && !tab.url.startsWith('chrome://') && !tab.url.startsWith('chrome-extension://')) {
+
       // Resolver a URL da imagem ANTES de injetar
       const catWithResolvedUrl = {
         ...newCat,
@@ -171,7 +208,7 @@ addCatButton.addEventListener('click', () => {
   });
 });
 
-// Remover gato
+//remove o gato
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('remove-cat')) {
     const catElement = e.target.closest('.selected-cat');
@@ -222,14 +259,15 @@ document.addEventListener('click', function (e) {
   }
 });
 
-// Carregar gatos ao abrir o popup
+
+//carregar gaots ao abrir o popup
 loadSavedCats();
 
 
 
 
 
-// Função para toggle (minimizar/maximizar) a lista de gatos
+//função para toggle (minimizar e maximizar) a lista de gatos
 function initializeToggleCatsList() {
   const toggleBtn = document.getElementById('toggle-cats-list');
   const catsListContainer = document.querySelector('.cats-list-container');
@@ -249,11 +287,13 @@ function initializeToggleCatsList() {
     const isMinimized = catsListContainer.classList.toggle('minimized');
     
     if (isMinimized) {
-      // Minimizado - mostrar ícone de maximizar
+      
+      //icone de maximizar
       iconMinimize.style.display = 'none';
       iconMaximize.style.display = 'block';
     } else {
-      // Maximizado - mostrar ícone de minimizar
+      
+      //icone de minimizar
       iconMinimize.style.display = 'block';
       iconMaximize.style.display = 'none';
     }
@@ -263,15 +303,15 @@ function initializeToggleCatsList() {
   });
 }
 
-// Inicializar toggle da lista
+
+//inicializar toggle da lista
 initializeToggleCatsList();
 
 
 
 
 
-// Função que será injetada na página para ADICIONAR gato
-// Função que será injetada na página para ADICIONAR gato
+//funcao que adiciona o gato na pagina
 function addCatToPage(cat) {
   console.log('Adicionando gato:', cat);
 
@@ -284,6 +324,7 @@ function addCatToPage(cat) {
   wrapper.style.zIndex = '9999';
   wrapper.style.cursor = 'grab';
   wrapper.style.userSelect = 'none';
+
 
   // Carregar posição salva ou usar posição padrão
   chrome.storage.local.get(['catPositions'], (result) => {
@@ -323,20 +364,37 @@ function addCatToPage(cat) {
   img.style.userSelect = 'none';
   img.draggable = false;
 
-  // Guardar as URLs das animações
+  
+  //url das animações colocadas mas acima
   const animationIdle = cat.image;
   let animationCarried = cat.image.replace('animation-1', 'animation-2');
   
-  // Ajustar nome do arquivo PNG
-  if (animationCarried.includes('preto.png')) {
+
+
+ //ajusta o nome para png
+if (animationCarried.includes('preto.png') && !animationCarried.includes('branco')) {
     animationCarried = animationCarried.replace('preto.png', 'gato-preto-carregado.png');
-  } else if (animationCarried.includes('branco.png')) {
+} 
+else if (animationCarried.includes('branco.png') && !animationCarried.includes('manchas') && !animationCarried.includes('mancha') && !animationCarried.includes('malhado')) {
     animationCarried = animationCarried.replace('branco.png', 'gato-branco-carregado.png');
-  } else if (animationCarried.includes('siames.png')) {
+} 
+else if (animationCarried.includes('siames.png')) {
     animationCarried = animationCarried.replace('siames.png', 'gato-siames-carregado.png');
-  } else if (animationCarried.includes('branco-manchas-pretas.png')) {
+}
+else if (animationCarried.includes('gato-branco-mancha-laranja-preto.png')) {
+    animationCarried = animationCarried.replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-carregado.png');
+}
+else if (animationCarried.includes('branco-manchas-pretas.png')) {
     animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
-  }
+}
+else if (animationCarried.includes('gato-laranja.png')) {
+    animationCarried = animationCarried.replace('gato-laranja.png', 'gato-laranja-carregado.png');
+}
+else if (animationCarried.includes('branco-malhado-cinza.png')) {
+    animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
+}
+
+
 
   console.log('Animação idle:', animationIdle);
   console.log('Animação carregado:', animationCarried);
@@ -347,7 +405,7 @@ function addCatToPage(cat) {
 
 
   let isDragging = false;
-let hasMoved = false; // NOVA FLAG
+let hasMoved = false;
 let offsetX, offsetY;
 
 wrapper.addEventListener('mousedown', (e) => {
@@ -355,10 +413,11 @@ wrapper.addEventListener('mousedown', (e) => {
   e.stopPropagation();
   
   isDragging = true;
-  hasMoved = false; // Reset da flag
+  hasMoved = false;
   wrapper.style.cursor = 'grabbing';
   
-  // Trocar para animação de carregado
+
+  //troca para a animação de estar sendo carregado
   img.src = animationCarried;
   
   const rect = wrapper.getBoundingClientRect();
@@ -374,7 +433,7 @@ document.addEventListener('mousemove', (e) => {
   e.preventDefault();
   e.stopPropagation();
   
-  hasMoved = true; // Marcou que houve movimento
+  hasMoved = true;
   
   const x = e.clientX - offsetX;
   const y = e.clientY - offsetY;
@@ -409,11 +468,14 @@ document.addEventListener('mouseup', (e) => {
   });
 });
 
-// Adicionar som ao clicar no gato (SÓ se não arrastou)
+
+
+
+//adiciona som ao clicar no gato(apenas o click)
 wrapper.addEventListener('click', (e) => {
   // Não tocar som se arrastou
   if (hasMoved) {
-    hasMoved = false; // Reset
+    hasMoved = false;
     return;
   }
   
@@ -428,6 +490,7 @@ wrapper.addEventListener('click', (e) => {
 });
 }
 
+
 // Função que será injetada na página para REMOVER gato
 function removeCatFromPage(catId) {
   const catElement = document.querySelector(`[data-cat-id="${catId}"]`);
@@ -440,6 +503,7 @@ function removeCatFromPage(catId) {
 
 // funcao mostrear imagem susto
 function mostrarImagemSusto() {
+  
   // Criar overlay escuro
   const overlay = document.createElement('div');
   overlay.style.position = 'fixed';

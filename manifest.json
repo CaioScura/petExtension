@@ -42,17 +42,28 @@
         "images/img-padrao/gato-branco-sentado.png",
         "images/img-padrao/gato-siames-sentado.png",
         "images/img-padrao/gato-brancopreto-sentado.png",
+        "images/img-padrao/gato-branco-mancha-laranja-preto-sentado.png",
+        "images/img-padrao/gato-laranja-sentado.png",
+        "images/img-padrao/branco-malhado-cinza.png",
+
         // animacao sentado
         "images/gatos/animation-1/preto.png",
         "images/gatos/animation-1/branco.png",
         "images/gatos/animation-1/siames.png",
         "images/gatos/animation-1/branco-manchas-pretas.png",
+        "images/gatos/animation-1/gato-branco-mancha-laranja-preto.png",
+        "images/gatos/animation-1/gato-laranja-sentado.png",
+        "images/gatos/animation-1/branco-malhado-cinza.png",
 
         // amimacao carregado
         "images/gatos/animation-2/gato-preto-carregado.png",
         "images/gatos/animation-2/gato-branco-carregado.png",
         "images/gatos/animation-2/gato-siames-carregado.png",
         "images/gatos/animation-2/gato-branco-preto-carregado.png",
+        "images/gatos/animation-2/gato-branco-mancha-laranja-preto-carregado.png",
+        "images/gatos/animation-2/gato-laranja-carregado.png",
+        "images/gatos/animation-2/gato-branco-malhado-carregado.png",
+        
 
 
         

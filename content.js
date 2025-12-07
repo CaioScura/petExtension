@@ -85,10 +85,10 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           e.stopPropagation();
           
           isDragging = true;
-          hasMoved = false; // Reset da flag
+          hasMoved = false; 
           wrapper.style.cursor = 'grabbing';
           
-          // Trocar para animação de carregado
+          //troca para a animação de estar sendo carregado
           img.src = chrome.runtime.getURL(animationCarried);
           
           const rect = wrapper.getBoundingClientRect();
@@ -104,7 +104,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           e.preventDefault();
           e.stopPropagation();
           
-          hasMoved = true; // Marcou que houve movimento
+          hasMoved = true;
           
           const x = e.clientX - offsetX;
           const y = e.clientY - offsetY;
