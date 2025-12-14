@@ -182,7 +182,7 @@ addCatButton.addEventListener('click', () => {
 
       //gatos em todas as abas
       chrome.tabs.query({}, (tabs) => {
-  tabs.forEach(tab => {
+      tabs.forEach(tab => {
 
 
     //verifica se a aba pode receber scripts(páginas do chrome:// nao pode receber)
@@ -366,12 +366,11 @@ function addCatToPage(cat) {
 
   
   //url das animações colocadas mas acima
-  const animationIdle = cat.image;
-  let animationCarried = cat.image.replace('animation-1', 'animation-2');
-  
+  // URL das animações
+const animationIdle = cat.image;
+let animationCarried = cat.image.replace('animation-1', 'animation-2');
 
-
- //ajusta o nome para png
+// Ajusta o nome para png
 if (animationCarried.includes('preto.png') && !animationCarried.includes('branco')) {
     animationCarried = animationCarried.replace('preto.png', 'gato-preto-carregado.png');
 } 
@@ -387,26 +386,24 @@ else if (animationCarried.includes('gato-branco-mancha-laranja-preto.png')) {
 else if (animationCarried.includes('branco-manchas-pretas.png')) {
     animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
 }
-else if (animationCarried.includes('gato-laranja.png')) {
-    animationCarried = animationCarried.replace('gato-laranja.png', 'gato-laranja-carregado.png');
+else if (animationCarried.includes('gato-laranja-sentado.png')) {
+    animationCarried = animationCarried.replace('gato-laranja-sentado.png', 'gato-laranja-carregado.png');
 }
 else if (animationCarried.includes('branco-malhado-cinza.png')) {
     animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
 }
 
+console.log('Animação idle:', animationIdle);
+console.log('Animação carregado:', animationCarried);
 
+wrapper.appendChild(nameDiv);
+wrapper.appendChild(img);
+document.body.appendChild(wrapper);
 
-  console.log('Animação idle:', animationIdle);
-  console.log('Animação carregado:', animationCarried);
-
-  wrapper.appendChild(nameDiv);
-  wrapper.appendChild(img);
-  document.body.appendChild(wrapper);
-
-
-  let isDragging = false;
+let isDragging = false;
 let hasMoved = false;
 let offsetX, offsetY;
+let lastX = 0;
 
 wrapper.addEventListener('mousedown', (e) => {
   e.preventDefault();
@@ -414,11 +411,12 @@ wrapper.addEventListener('mousedown', (e) => {
   
   isDragging = true;
   hasMoved = false;
+  lastX = e.clientX;
   wrapper.style.cursor = 'grabbing';
   
-
-  //troca para a animação de estar sendo carregado
+  // Troca para a animação de estar sendo carregado
   img.src = animationCarried;
+  img.style.transform = 'scaleX(1)';
   
   const rect = wrapper.getBoundingClientRect();
   offsetX = e.clientX - rect.left;
@@ -438,6 +436,15 @@ document.addEventListener('mousemove', (e) => {
   const x = e.clientX - offsetX;
   const y = e.clientY - offsetY;
   
+
+  const direction = e.clientX - lastX;
+  if (direction > 0) {
+    img.style.transform = 'scaleX(1)';
+  } else if (direction < 0) {
+    img.style.transform = 'scaleX(-1)';
+  }
+  lastX = e.clientX;
+  
   wrapper.style.left = `${x}px`;
   wrapper.style.top = `${y}px`;
   wrapper.style.bottom = 'auto';
@@ -456,6 +463,7 @@ document.addEventListener('mouseup', (e) => {
   
   // Voltar para animação idle
   img.src = animationIdle;
+  img.style.transform = 'scaleX(1)';
 
   // Salvar posição no storage
   chrome.storage.local.get(['catPositions'], (result) => {

@@ -60,14 +60,26 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         let animationCarried = cat.image.replace('animation-1', 'animation-2');
         
         // Ajustar nome do arquivo PNG
-        if (animationCarried.includes('preto.png')) {
+        if (animationCarried.includes('preto.png') && !animationCarried.includes('branco')) {
           animationCarried = animationCarried.replace('preto.png', 'gato-preto-carregado.png');
-        } else if (animationCarried.includes('branco.png')) {
-          animationCarried = animationCarried.replace('branco.png', 'gato-branco-carregado.png');
-        } else if (animationCarried.includes('siames.png')) {
-          animationCarried = animationCarried.replace('siames.png', 'gato-siames-carregado.png');
-        } else if (animationCarried.includes('branco-manchas-pretas.png')) {
-          animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
+        } 
+        else if (animationCarried.includes('branco.png') && !animationCarried.includes('manchas') && !animationCarried.includes('mancha') && !animationCarried.includes('malhado')) {
+            animationCarried = animationCarried.replace('branco.png', 'gato-branco-carregado.png');
+        } 
+        else if (animationCarried.includes('siames.png')) {
+            animationCarried = animationCarried.replace('siames.png', 'gato-siames-carregado.png');
+        }
+        else if (animationCarried.includes('gato-branco-mancha-laranja-preto.png')) {
+            animationCarried = animationCarried.replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-carregado.png');
+        }
+        else if (animationCarried.includes('branco-manchas-pretas.png')) {
+            animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
+        }
+        else if (animationCarried.includes('gato-laranja-sentado.png')) {
+            animationCarried = animationCarried.replace('gato-laranja-sentado.png', 'gato-laranja-carregado.png');
+        }
+        else if (animationCarried.includes('branco-malhado-cinza.png')) {
+            animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
         }
 
         wrapper.appendChild(nameDiv);
@@ -78,6 +90,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         let isDragging = false;
         let hasMoved = false;
         let offsetX, offsetY;
+        let lastX = 0;
 
 
         wrapper.addEventListener('mousedown', (e) => {
@@ -86,10 +99,11 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           
           isDragging = true;
           hasMoved = false; 
+          lastX = e.clientX;
           wrapper.style.cursor = 'grabbing';
           
-          //troca para a animação de estar sendo carregado
           img.src = chrome.runtime.getURL(animationCarried);
+          img.style.transform = 'scaleX(1)';
           
           const rect = wrapper.getBoundingClientRect();
           offsetX = e.clientX - rect.left;
@@ -108,6 +122,15 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           
           const x = e.clientX - offsetX;
           const y = e.clientY - offsetY;
+ 
+
+          const direction = e.clientX - lastX;
+          if (direction > 0) {
+            img.style.transform = 'scaleX(1)';
+          } else if (direction < 0) {
+            img.style.transform = 'scaleX(-1)';
+          }
+          lastX = e.clientX;
           
           wrapper.style.left = `${x}px`;
           wrapper.style.top = `${y}px`;
@@ -127,6 +150,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           
           // Voltar para animação idle
           img.src = chrome.runtime.getURL(animationIdle);
+          img.style.transform = 'scaleX(1)';
 
           // Salvar posição no storage e notificar outras abas
           const newPosition = {
@@ -142,6 +166,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
             });
           });
         });
+
 
         // Adicionar som ao clicar no gato (SÓ se não arrastou)
         wrapper.addEventListener('click', (e) => {
