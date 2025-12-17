@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gatos Flutuantes",
-  "version": "2.0",
+  "version": "2.1",
   "description": "Escolha um gatito para tu",
   "permissions": [
     "storage",
@@ -33,9 +33,6 @@
     {
       "resources": [
         "images/*.png",
-        // "images/gato1.png",
-        // "images/gato2.png",
-        // "images/gato3.png",
 
         // imagem padrao
         "images/img-padrao/gato-preto-sentado.png",
@@ -63,6 +60,11 @@
         "images/gatos/animation-2/gato-branco-mancha-laranja-preto-carregado.png",
         "images/gatos/animation-2/gato-laranja-carregado.png",
         "images/gatos/animation-2/gato-branco-malhado-carregado.png",
+
+        // animacao deitado (animation-3)
+        "images/gatos/animation-3/gato-preto-deitado.png",
+        "images/gatos/animation-3/gato-branco-deitado.png",
+        "images/gatos/animation-3/gato-siames-deitado.png",
         
 
 

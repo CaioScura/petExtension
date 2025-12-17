@@ -1,7 +1,9 @@
 // Verificar se a API do Chrome está disponível
 if (typeof chrome !== 'undefined' && chrome.storage) {
 
-  // Função para carregar e renderizar os gatos
+
+
+  //funcao para carregar e renderizar os gatos na pagina
   function loadCats() {
     chrome.storage.local.get(['allCats', 'catPositions'], (result) => {
       const cats = result.allCats || [];
@@ -9,7 +11,8 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
       console.log('Carregando gatos no content.js:', cats);
 
       cats.forEach((cat, index) => {
-        // Verificar se o gato já existe na página
+
+        //verifica se ja existe
         if (document.querySelector(`[data-cat-id="${cat.id}"]`)) return;
 
         const wrapper = document.createElement('div');
@@ -19,6 +22,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         wrapper.style.zIndex = '9999';
         wrapper.style.cursor = 'grab';
         wrapper.style.userSelect = 'none';
+
 
         // Usar posição salva ou posição padrão
         if (positions[cat.id]) {
@@ -33,9 +37,6 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
 
         const nameDiv = document.createElement('div');
         nameDiv.style.width = 'auto';
-        // nameDiv.style.display = 'flex';
-        // nameDiv.style.justifyContent = 'center';
-        // nameDiv.style.alignItems = 'center';
         nameDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
         nameDiv.style.color = '#fefefe';
         nameDiv.style.padding = '5px';
@@ -55,11 +56,26 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         img.style.userSelect = 'none';
         img.draggable = false;
 
-        // Guardar as URLs das animações
-        const animationIdle = cat.image;
+
+        //guarda as urls das animações
+        const animationIdle1 = cat.image;
         let animationCarried = cat.image.replace('animation-1', 'animation-2');
         
-        // Ajustar nome do arquivo PNG
+       
+
+        //verifica se o gato tem animation 3
+        let animationIdle3 = null;
+        if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+          animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('preto.png', 'gato-preto-deitado.png');
+        } else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+          animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco.png', 'gato-branco-deitado.png');
+        } else if (animationIdle1.includes('siames.png')) {
+          animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('siames.png', 'gato-siames-deitado.png');
+        }
+        
+
+
+        //ajustar nome do arquivo PNG para animation-2
         if (animationCarried.includes('preto.png') && !animationCarried.includes('branco')) {
           animationCarried = animationCarried.replace('preto.png', 'gato-preto-carregado.png');
         } 
@@ -82,6 +98,16 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
             animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
         }
 
+
+
+        //escolher animações aleatoria ao adicionar na tela, caso tenha animation-3
+        let currentIdleAnimation = animationIdle1;
+        if (animationIdle3) {
+          currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+        }
+
+        img.src = chrome.runtime.getURL(currentIdleAnimation);
+
         wrapper.appendChild(nameDiv);
         wrapper.appendChild(img);
         document.body.appendChild(wrapper);
@@ -91,6 +117,18 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         let hasMoved = false;
         let offsetX, offsetY;
         let lastX = 0;
+        let animationInterval = null;
+
+        
+        //alternar as animações aleatoriamente
+        if (animationIdle3) {
+          animationInterval = setInterval(() => {
+            if (!isDragging) {
+              currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+              img.src = chrome.runtime.getURL(currentIdleAnimation);
+            }
+          }, 5000 + Math.random() * 5000); //entre 5 e 10 segundos
+        }
 
 
         wrapper.addEventListener('mousedown', (e) => {
@@ -148,9 +186,12 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           wrapper.style.cursor = 'grab';
           wrapper.style.zIndex = '9999';
           
-          // Voltar para animação idle
-          img.src = chrome.runtime.getURL(animationIdle);
+          
+
+          //voltar para a animação anterior
+          img.src = chrome.runtime.getURL(currentIdleAnimation);
           img.style.transform = 'scaleX(1)';
+
 
           // Salvar posição no storage e notificar outras abas
           const newPosition = {
@@ -168,11 +209,13 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         });
 
 
-        // Adicionar som ao clicar no gato (SÓ se não arrastou)
+        
+        //adiciona o audio quando clica no gato
         wrapper.addEventListener('click', (e) => {
-          // Não tocar som se arrastou
+
+          //se arrastou nao toca o audio
           if (hasMoved) {
-            hasMoved = false; // Reset
+            hasMoved = false;
             return;
           }
           
@@ -185,16 +228,32 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
             audio.currentTime = 0;
           }, 2000);
         });
+
+
+        // Limpar interval quando o gato for removido
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.removedNodes.forEach((node) => {
+              if (node === wrapper && animationInterval) {
+                clearInterval(animationInterval);
+              }
+            });
+          });
+        });
+        observer.observe(document.body, { childList: true });
       });
     });
   }
 
-  // Carregar gatos quando a página estiver pronta
+
+
+  //carregar os gatos nas paginas
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadCats);
   } else {
     loadCats();
   }
+  
 
   // Escutar mudanças no storage
   chrome.storage.onChanged.addListener((changes, namespace) => {
