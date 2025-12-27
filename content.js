@@ -131,8 +131,14 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         let animationIdle5 = null;
         if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
           animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('preto.png', 'gato-preto-dormindo.png');
-        } else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+        } 
+        
+        else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
           animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco.png', 'gato-branco-dormindo.png');
+        }
+
+        else if (animationIdle1.includes('siames.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+          animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('siames.png', 'gato-siames-dormindo.png');
         }
 
         

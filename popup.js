@@ -171,7 +171,9 @@ addCatButton.addEventListener('click', () => {
 
       //toca o audio
       let sound;
-      if (name.toLowerCase() === 'megumi') {
+      const nomesSusto = ['megumi', 'megumao', 'megu', 'megumote'];
+
+      if (nomesSusto.includes(name.toLowerCase())) {
         sound = new Audio('audio/gato-rindo.mp3');
 
         mostrarImagemSusto();
@@ -283,6 +285,10 @@ addCatButton.addEventListener('click', () => {
             
             else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
               animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco.png', 'gato-branco-dormindo.png');
+            }
+
+            else if (animationIdle1.includes('siames.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+              animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('siames.png', 'gato-siames-dormindo.png');
             }
 
            
@@ -694,21 +700,6 @@ function removeCatFromPage(catId) {
 
 // funcao mostrear imagem susto
 function mostrarImagemSusto() {
-  
-  // Criar overlay escuro
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-  overlay.style.zIndex = '99999';
-  overlay.style.display = 'flex';
-  overlay.style.justifyContent = 'center';
-  overlay.style.alignItems = 'center';
-  overlay.style.animation = 'fadeIn 0.2s ease';
-
   const sustos = [
     'images/susto1.png',
     'images/susto2.png',
@@ -717,21 +708,55 @@ function mostrarImagemSusto() {
   ];
 
   const imagemAleatoria = sustos[Math.floor(Math.random() * sustos.length)];
+  const imagemUrl = chrome.runtime.getURL(imagemAleatoria);
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs[0] && !tabs[0].url.startsWith('chrome://') && !tabs[0].url.startsWith('chrome-extension://')) {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        func: mostrarSustoNaPagina,
+        args: [imagemUrl]
+      }).catch(() => {
+        console.log('Não foi possível mostrar susto na página');
+      });
+    }
+  });
+}
 
 
-  // Criar imagem de susto
+function mostrarSustoNaPagina(imagemUrl) {
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+  overlay.style.zIndex = '999999';
+  overlay.style.display = 'flex';
+  overlay.style.justifyContent = 'center';
+  overlay.style.alignItems = 'center';
+  overlay.style.opacity = '0';
+  overlay.style.transition = 'opacity 0.2s ease';
+
   const img = document.createElement('img');
-  img.src = imagemAleatoria;
+  img.src = imagemUrl;
   img.style.maxWidth = '200%';
   img.style.maxHeight = '200%';
   img.style.imageRendering = 'pixelated';
-  img.style.animation = 'zoomIn 0.2s ease';
+  img.style.transform = 'scale(4.5)';
+  img.style.transition = 'transform 0.2s ease';
 
   overlay.appendChild(img);
   document.body.appendChild(overlay);
 
   setTimeout(() => {
-    overlay.style.animation = 'fadeOut 0.2s ease';
+    overlay.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  }, 10);
+
+  setTimeout(() => {
+    overlay.style.opacity = '0';
     setTimeout(() => {
       overlay.remove();
     }, 300);
