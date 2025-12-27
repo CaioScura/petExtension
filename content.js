@@ -97,6 +97,9 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         else if (animationCarried.includes('branco-malhado-cinza.png')) {
             animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
         }
+        else if (animationCarried.includes('gato-fantasma.png')) {
+            animationCarried = animationCarried.replace('gato-fantasma.png', 'gato-fantasma.png');
+        }
 
 
 

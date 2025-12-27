@@ -42,6 +42,7 @@
         "images/img-padrao/gato-branco-mancha-laranja-preto-sentado.png",
         "images/img-padrao/gato-laranja-sentado.png",
         "images/img-padrao/branco-malhado-cinza.png",
+        "images/img-padrao/gato-fantasma.png",
 
         // animacao sentado
         "images/gatos/animation-1/preto.png",
@@ -65,6 +66,11 @@
         "images/gatos/animation-3/gato-preto-deitado.png",
         "images/gatos/animation-3/gato-branco-deitado.png",
         "images/gatos/animation-3/gato-siames-deitado.png",
+
+        "images/gatos/animation-3/gato-branco-mancha-laranja-preto-deitado.png",
+        "images/gatos/animation-3/branco-manchas-pretas-deitado.png",
+        "images/gatos/animation-3/gato-laranja-deitado.png",
+        "images/gatos/animation-3/gato-cinza-malhado-deitado.png",
         
 
 

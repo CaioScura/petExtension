@@ -46,6 +46,12 @@ const catImages = [
     preview: 'images/img-padrao/branco-malhado-cinza.png',
     animation: 'images/gatos/animation-1/branco-malhado-cinza.png'
   },
+
+  //gato fantasma
+  {
+    preview: 'images/img-padrao/gato-fantasma.png',
+    animation: 'images/img-padrao/gato-fantasma.png'
+  },
 ];
 
 
