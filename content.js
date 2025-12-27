@@ -81,6 +81,15 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         }else if (animationIdle1.includes('gato-laranja.png.png')) {
           animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('gato-laranja.png.png', 'gato-laranja-deitado.png');
         }
+
+
+        //verifica se o gato tem animation 4
+        let animationIdle4 = null;
+        if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+          animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('preto.png', 'gato-preto-caixa.png');
+        } else if (animationIdle1.includes('siames.png')) {
+          animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('siames.png', 'gato-siames-caixa.png');
+        }
         
 
 
@@ -113,10 +122,20 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
 
 
         //escolher animações aleatoria ao adicionar na tela, caso tenha animation-3
+        // let currentIdleAnimation = animationIdle1;
+        // if (animationIdle3) {
+        //   currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+        // }
+        //escolher animações aleatoria ao adicionar na tela
         let currentIdleAnimation = animationIdle1;
-        if (animationIdle3) {
-          currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+        const availableAnimations = [animationIdle1];
+        if (animationIdle3) availableAnimations.push(animationIdle3);
+        if (animationIdle4) availableAnimations.push(animationIdle4);
+
+        if (availableAnimations.length > 1) {
+          currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
         }
+
 
         img.src = chrome.runtime.getURL(currentIdleAnimation);
 
@@ -133,14 +152,28 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
 
         
         //alternar as animações aleatoriamente
-        if (animationIdle3) {
+        // if (animationIdle3) {
+        //   animationInterval = setInterval(() => {
+        //     if (!isDragging) {
+        //       currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+        //       img.src = chrome.runtime.getURL(currentIdleAnimation);
+        //     }
+        //   }, 5000 + Math.random() * 5000); //entre 5 e 10 segundos
+        // }
+        //alternar as animações aleatoriamente
+        if (animationIdle3 || animationIdle4) {
           animationInterval = setInterval(() => {
             if (!isDragging) {
-              currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+              const availableAnimations = [animationIdle1];
+              if (animationIdle3) availableAnimations.push(animationIdle3);
+              if (animationIdle4) availableAnimations.push(animationIdle4);
+              
+              currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
               img.src = chrome.runtime.getURL(currentIdleAnimation);
             }
-          }, 5000 + Math.random() * 5000); //entre 5 e 10 segundos
+          }, 5000 + Math.random() * 5000);
         }
+        
 
 
         wrapper.addEventListener('mousedown', (e) => {

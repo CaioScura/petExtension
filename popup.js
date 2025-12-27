@@ -230,6 +230,15 @@ addCatButton.addEventListener('click', () => {
 
 
 
+            let animationIdle4 = null;
+            if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+              animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('preto.png', 'gato-preto-caixa.png');
+            } else if (animationIdle1.includes('siames.png')) {
+              animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('siames.png', 'gato-siames-caixa.png');
+            }
+
+
+
             //ajustar a animação 2 dos gatos
             if (animationCarried.includes('preto.png') && !animationCarried.includes('branco')) {
               animationCarried = animationCarried.replace('preto.png', 'gato-preto-carregado.png');
@@ -255,6 +264,7 @@ addCatButton.addEventListener('click', () => {
               image: chrome.runtime.getURL(animationIdle1),
               animationIdle1: chrome.runtime.getURL(animationIdle1),
               animationIdle3: animationIdle3 ? chrome.runtime.getURL(animationIdle3) : null,
+              animationIdle4: animationIdle4 ? chrome.runtime.getURL(animationIdle4) : null,
               animationCarried: chrome.runtime.getURL(animationCarried)
             };
 
@@ -417,14 +427,25 @@ function addCatToPage(cat) {
   // URLs já vêm resolvidas no objeto cat
   const animationIdle1 = cat.animationIdle1;
   const animationIdle3 = cat.animationIdle3;
+  const animationIdle4 = cat.animationIdle4;
   const animationCarried = cat.animationCarried;
 
 
   //escolher animação aleatória quando o gato é adicioado
+  // let currentIdleAnimation = animationIdle1;
+  // if (animationIdle3) {
+  //   currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+  // }
   let currentIdleAnimation = animationIdle1;
-  if (animationIdle3) {
-    currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+  const availableAnimations = [animationIdle1];
+  if (animationIdle3) availableAnimations.push(animationIdle3);
+  if (animationIdle4) availableAnimations.push(animationIdle4);
+
+  if (availableAnimations.length > 1) {
+    currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
   }
+
+
   img.src = currentIdleAnimation;
 
   wrapper.appendChild(nameDiv);
@@ -462,14 +483,26 @@ function addCatToPage(cat) {
 
 
   //alterar entre as animações
-  if (animationIdle3) {
-    animationInterval = setInterval(() => {
-      if (!isDragging) {
-        currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
-        img.src = currentIdleAnimation;
-      }
-    }, 5000 + Math.random() * 5000);
-  }
+  // if (animationIdle3) {
+  //   animationInterval = setInterval(() => {
+  //     if (!isDragging) {
+  //       currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+  //       img.src = currentIdleAnimation;
+  //     }
+  //   }, 5000 + Math.random() * 5000);
+  // }
+  if (animationIdle3 || animationIdle4) {
+  animationInterval = setInterval(() => {
+    if (!isDragging) {
+      const availableAnimations = [animationIdle1];
+      if (animationIdle3) availableAnimations.push(animationIdle3);
+      if (animationIdle4) availableAnimations.push(animationIdle4);
+      
+      currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+      img.src = currentIdleAnimation;
+    }
+  }, 5000 + Math.random() * 5000);
+}
 
 
   wrapper.addEventListener('mousedown', (e) => {
