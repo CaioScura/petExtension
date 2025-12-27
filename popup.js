@@ -517,26 +517,25 @@ function addCatToPage(cat) {
 
 
   //ADICIONAR CORACAO APOS ADD GATO
+  // if (typeof chrome !== 'undefined' && chrome.runtime) {
+  //   const coracao = document.createElement('img');
+  //   coracao.src = chrome.runtime.getURL('images/coracao/coracao300.png');
+  //   coracao.style.position = 'absolute';
+  //   coracao.style.top = '-12px';
+  //   coracao.style.right = '-10px';
+  //   coracao.style.width = '40%';
+  //   coracao.style.height = 'auto';
+  //   coracao.style.pointerEvents = 'none';
+  //   coracao.style.opacity = '1';
+  //   coracao.style.transition = 'opacity 1s ease';
+  //   coracao.style.zIndex = '1';
+  //   wrapper.appendChild(coracao);
 
-if (typeof chrome !== 'undefined' && chrome.runtime) {
-  const coracao = document.createElement('img');
-  coracao.src = chrome.runtime.getURL('images/coracao/coracao300.png');
-  coracao.style.position = 'absolute';
-  coracao.style.top = '-12px';
-  coracao.style.right = '-10px';
-  coracao.style.width = '40%';
-  coracao.style.height = 'auto';
-  coracao.style.pointerEvents = 'none';
-  coracao.style.opacity = '1';
-  coracao.style.transition = 'opacity 1s ease';
-  coracao.style.zIndex = '1';
-  wrapper.appendChild(coracao);
-
-  setTimeout(() => {
-    coracao.style.opacity = '0';
-    setTimeout(() => coracao.remove(), 1000);
-  }, 2000);
-}
+  //   setTimeout(() => {
+  //     coracao.style.opacity = '0';
+  //     setTimeout(() => coracao.remove(), 1000);
+  //   }, 2000);
+  // }
 
 
 
