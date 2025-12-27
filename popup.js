@@ -687,7 +687,9 @@ function mostrarImagemSusto() {
 
   const sustos = [
     'images/susto1.png',
-    'images/susto2.png'
+    'images/susto2.png',
+    'images/susto3.png',
+    'images/susto4.png'
   ];
 
   const imagemAleatoria = sustos[Math.floor(Math.random() * sustos.length)];
