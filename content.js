@@ -74,6 +74,9 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         }else if (animationIdle1.includes('branco-manchas-pretas.png')) {
           animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco-manchas-pretas.png', 'gato-siames-deitado.png');
         }
+        else if (animationIdle1.includes('gato-branco-mancha-laranja-preto.png')) {
+          animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-deitado.png');
+        }
         
 
 
