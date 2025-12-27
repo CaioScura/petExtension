@@ -33,6 +33,9 @@
     {
       "resources": [
         "images/*.png",
+        
+        "images/coracao/*.png",
+        "images/coracao/coracao300.png",
 
         // imagem padrao
         "images/img-padrao/gato-preto-sentado.png",

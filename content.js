@@ -174,7 +174,7 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
             animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
         }
         else if (animationCarried.includes('gato-fantasma.png')) {
-            animationCarried = animationCarried.replace('gato-fantasma.png', 'gato-fantasma.png');
+            animationCarried = animationCarried.replace('gato-fantasma.png', 'fantasma/gato-fantasma1.png');
         }
 
 
@@ -200,6 +200,9 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         wrapper.appendChild(nameDiv);
         wrapper.appendChild(img);
         document.body.appendChild(wrapper);
+
+
+
 
 
         let isDragging = false;
