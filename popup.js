@@ -265,6 +265,13 @@ addCatButton.addEventListener('click', () => {
               animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-manchas-laranjas-pretas-caixa.png');
             }
 
+            else if (animationIdle1.includes('gato-laranja.png')) {
+              animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('gato-laranja.png', 'gato-laranja-caixa.png');
+            }
+
+            else if (animationIdle1.includes('branco-malhado-cinza.png')) {
+              animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('branco-malhado-cinza.png', 'gato-malhado-cinza-caixa.png');
+            }
 
            
 
