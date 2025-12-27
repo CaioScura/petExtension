@@ -76,6 +76,10 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         }
         else if (animationIdle1.includes('gato-branco-mancha-laranja-preto.png')) {
           animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-deitado.png');
+        }else if (animationIdle1.includes('branco-malhado-cinza.png')) {
+          animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco-malhado-cinza.png', 'gato-cinza-malhado-deitado.png');
+        }else if (animationIdle1.includes('gato-laranja.png.png')) {
+          animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('gato-laranja.png.png', 'gato-laranja-deitado.png');
         }
         
 

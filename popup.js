@@ -222,6 +222,10 @@ addCatButton.addEventListener('click', () => {
               animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco-manchas-pretas.png', 'branco-manchas-pretas-deitado.png');
             }else if (animationIdle1.includes('gato-branco-mancha-laranja-preto.png')) {
               animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-deitado.png');
+            }else if (animationIdle1.includes('branco-malhado-cinza.png')) {
+              animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco-malhado-cinza.png', 'gato-cinza-malhado-deitado.png');
+            }else if (animationIdle1.includes('gato-laranja.png')) {
+              animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('gato-laranja.png', 'gato-laranja-deitado.png');
             }
 
 
@@ -237,7 +241,7 @@ addCatButton.addEventListener('click', () => {
               animationCarried = animationCarried.replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-carregado.png');
             } else if (animationCarried.includes('branco-manchas-pretas.png')) {
               animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
-            } else if (animationCarried.includes('gato-laranja-sentado.png')) {
+            } else if (animationCarried.includes('gato-laranja.png')) {
               animationCarried = animationCarried.replace('gato-laranja.png', 'gato-laranja-carregado.png');
             } else if (animationCarried.includes('branco-malhado-cinza.png')) {
               animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
