@@ -141,6 +141,10 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('siames.png', 'gato-siames-dormindo.png');
         }
 
+        else if (animationIdle1.includes('branco-malhado-cinza.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+          animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco-malhado-cinza.png', 'gato-malhado-cinza-dormindo.png');
+        }
+
         
 
 

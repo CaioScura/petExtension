@@ -50,7 +50,7 @@ const catImages = [
   //gato fantasma
   {
     preview: 'images/img-padrao/gato-fantasma.png',
-    animation: 'images/img-padrao/gato-fantasma.png'
+    animation: 'images/gatos/animation-1/fantasma/gato-fantasma1.png'
   },
 ];
 
@@ -289,6 +289,10 @@ addCatButton.addEventListener('click', () => {
 
             else if (animationIdle1.includes('siames.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
               animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('siames.png', 'gato-siames-dormindo.png');
+            }
+
+            else if (animationIdle1.includes('branco-malhado-cinza.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+              animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco-malhado-cinza.png', 'gato-malhado-cinza-dormindo.png');
             }
 
            
