@@ -273,6 +273,18 @@ addCatButton.addEventListener('click', () => {
               animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('branco-malhado-cinza.png', 'gato-malhado-cinza-caixa.png');
             }
 
+
+
+            //ANIMAÇÃO 5: dormindo
+            let animationIdle5 = null;
+            if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+              animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('preto.png', 'gato-preto-dormindo.png');
+            } 
+            
+            else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+              animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco.png', 'gato-branco-dormindo.png');
+            }
+
            
 
 
@@ -303,6 +315,7 @@ addCatButton.addEventListener('click', () => {
               animationIdle1: chrome.runtime.getURL(animationIdle1),
               animationIdle3: animationIdle3 ? chrome.runtime.getURL(animationIdle3) : null,
               animationIdle4: animationIdle4 ? chrome.runtime.getURL(animationIdle4) : null,
+              animationIdle5: animationIdle5 ? chrome.runtime.getURL(animationIdle5) : null,
               animationCarried: chrome.runtime.getURL(animationCarried)
             };
 
@@ -466,6 +479,7 @@ function addCatToPage(cat) {
   const animationIdle1 = cat.animationIdle1;
   const animationIdle3 = cat.animationIdle3;
   const animationIdle4 = cat.animationIdle4;
+  const animationIdle5 = cat.animationIdle5;
   const animationCarried = cat.animationCarried;
 
 
@@ -520,27 +534,37 @@ function addCatToPage(cat) {
 
 
 
-  //alterar entre as animações
-  // if (animationIdle3) {
-  //   animationInterval = setInterval(() => {
-  //     if (!isDragging) {
-  //       currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
-  //       img.src = currentIdleAnimation;
-  //     }
-  //   }, 5000 + Math.random() * 5000);
-  // }
-  if (animationIdle3 || animationIdle4) {
-  animationInterval = setInterval(() => {
-    if (!isDragging) {
-      const availableAnimations = [animationIdle1];
-      if (animationIdle3) availableAnimations.push(animationIdle3);
-      if (animationIdle4) availableAnimations.push(animationIdle4);
+
+//   if (animationIdle3 || animationIdle4) {
+//   animationInterval = setInterval(() => {
+//     if (!isDragging) {
+//       const availableAnimations = [animationIdle1];
+//       if (animationIdle3) availableAnimations.push(animationIdle3);
+//       if (animationIdle4) availableAnimations.push(animationIdle4);
       
-      currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
-      img.src = currentIdleAnimation;
+//       currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+//       img.src = currentIdleAnimation;
+//     }
+//   }, 5000 + Math.random() * 5000);
+// }
+    if (animationIdle3 || animationIdle4) {
+      animationInterval = setInterval(() => {
+        if (!isDragging) {
+          const availableAnimations = [animationIdle1];
+          if (animationIdle3) availableAnimations.push(animationIdle3);
+          if (animationIdle4) availableAnimations.push(animationIdle4);
+          
+          // Se animation-5 existe e está em animation-3, pode ativar animation-5
+          if (animationIdle5 && currentIdleAnimation === animationIdle3 && Math.random() < 0.3) {
+            currentIdleAnimation = animationIdle5;
+          } else {
+            currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+          }
+          
+          img.src = currentIdleAnimation;
+        }
+      }, 5000 + Math.random() * 5000);
     }
-  }, 5000 + Math.random() * 5000);
-}
 
 
   wrapper.addEventListener('mousedown', (e) => {

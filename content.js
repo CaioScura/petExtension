@@ -124,6 +124,17 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           animationIdle4 = animationIdle1.replace('animation-1', 'animation-4').replace('branco-malhado-cinza.png', 'gato-malhado-cinza-caixa.png');
         }
 
+
+
+        //ANIMAÇÃO 5: dormindo
+        //verifica se o gato tem animation 5 (só pode ativar após animation-3)
+        let animationIdle5 = null;
+        if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+          animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('preto.png', 'gato-preto-dormindo.png');
+        } else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+          animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco.png', 'gato-branco-dormindo.png');
+        }
+
         
 
 
@@ -188,15 +199,22 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         let animationInterval = null;
 
         
+        
         //alternar as animações aleatoriamente
-        // if (animationIdle3) {
+        // if (animationIdle3 || animationIdle4) {
         //   animationInterval = setInterval(() => {
         //     if (!isDragging) {
-        //       currentIdleAnimation = Math.random() < 0.5 ? animationIdle1 : animationIdle3;
+        //       const availableAnimations = [animationIdle1];
+        //       if (animationIdle3) availableAnimations.push(animationIdle3);
+        //       if (animationIdle4) availableAnimations.push(animationIdle4);
+              
+        //       currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
         //       img.src = chrome.runtime.getURL(currentIdleAnimation);
         //     }
-        //   }, 5000 + Math.random() * 5000); //entre 5 e 10 segundos
+        //   }, 5000 + Math.random() * 5000);
         // }
+
+        // adicionei animação 5, caso esteja na animação 3
         //alternar as animações aleatoriamente
         if (animationIdle3 || animationIdle4) {
           animationInterval = setInterval(() => {
@@ -205,7 +223,13 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
               if (animationIdle3) availableAnimations.push(animationIdle3);
               if (animationIdle4) availableAnimations.push(animationIdle4);
               
-              currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+              //se a animation-5 existe e está em animation-3, pode ativar animation-5
+              if (animationIdle5 && currentIdleAnimation === animationIdle3 && Math.random() < 0.3) {
+                currentIdleAnimation = animationIdle5;
+              } else {
+                currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+              }
+              
               img.src = chrome.runtime.getURL(currentIdleAnimation);
             }
           }, 5000 + Math.random() * 5000);
