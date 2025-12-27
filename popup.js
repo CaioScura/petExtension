@@ -202,6 +202,15 @@ addCatButton.addEventListener('click', () => {
 
 
 
+            // //verificar quais os gatos que tem a animação 3
+            // if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+            //   animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('preto.png', 'gato-preto-deitado.png');
+            // } else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+            //   animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco.png', 'gato-branco-deitado.png');
+            // } else if (animationIdle1.includes('siames.png')) {
+            //   animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('siames.png', 'gato-siames-deitado.png');
+            // }
+
             //verificar quais os gatos que tem a animação 3
             if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
               animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('preto.png', 'gato-preto-deitado.png');
@@ -209,6 +218,8 @@ addCatButton.addEventListener('click', () => {
               animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco.png', 'gato-branco-deitado.png');
             } else if (animationIdle1.includes('siames.png')) {
               animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('siames.png', 'gato-siames-deitado.png');
+            }else if (animationIdle1.includes('branco-manchas-pretas.png')) {
+              animationIdle3 = animationIdle1.replace('animation-1', 'animation-3').replace('branco-manchas-pretas.png', 'branco-manchas-pretas-deitado.png');
             }
 
 
@@ -224,8 +235,8 @@ addCatButton.addEventListener('click', () => {
               animationCarried = animationCarried.replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-carregado.png');
             } else if (animationCarried.includes('branco-manchas-pretas.png')) {
               animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
-            } else if (animationCarried.includes('gato-laranja-sentado.png')) {
-              animationCarried = animationCarried.replace('gato-laranja-sentado.png', 'gato-laranja-carregado.png');
+            } else if (animationCarried.includes('gato-laranja.png')) {
+              animationCarried = animationCarried.replace('gato-laranja.png', 'gato-laranja-carregado.png');
             } else if (animationCarried.includes('branco-malhado-cinza.png')) {
               animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
             }
