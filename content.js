@@ -145,6 +145,31 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
           animationIdle5 = animationIdle1.replace('animation-1', 'animation-5').replace('branco-malhado-cinza.png', 'gato-malhado-cinza-dormindo.png');
         }
 
+
+
+        //ANIMACAO 6: banho
+        //verifica se o gato tem animation 6 (só pode ativar após animation-1)
+        let animationIdle6 = null;
+        if (animationIdle1.includes('preto.png') && !animationIdle1.includes('branco')) {
+          animationIdle6 = animationIdle1.replace('animation-1', 'animation-6').replace('preto.png', 'gato-preto-banho.png');
+        } 
+
+        else if (animationIdle1.includes('branco.png') && !animationIdle1.includes('manchas') && !animationIdle1.includes('mancha') && !animationIdle1.includes('malhado')) {
+          animationIdle6 = animationIdle1.replace('animation-1', 'animation-6').replace('branco.png', 'gato-branco-banho.png');
+        }
+
+        else if (animationIdle1.includes('siames.png')) {
+          animationIdle6 = animationIdle1.replace('animation-1', 'animation-6').replace('siames.png', 'gato-siames-banho.png');
+        }
+
+        else if (animationIdle1.includes('gato-branco-mancha-laranja-preto.png')) {
+          animationIdle6 = animationIdle1.replace('animation-1', 'animation-6').replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-preta-laranja-banho.png');
+        }
+
+        else if (animationIdle1.includes('branco-manchas-pretas.png')) {
+          animationIdle6 = animationIdle1.replace('animation-1', 'animation-6').replace('branco-manchas-pretas.png', 'gato-branco-manchas-pretas-banho.png');
+        }
+
         
 
 
@@ -212,7 +237,9 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         let animationInterval = null;
 
         
-        
+    
+
+        // adicionei animação 5, caso esteja na animação 3
         //alternar as animações aleatoriamente
         // if (animationIdle3 || animationIdle4) {
         //   animationInterval = setInterval(() => {
@@ -221,14 +248,17 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
         //       if (animationIdle3) availableAnimations.push(animationIdle3);
         //       if (animationIdle4) availableAnimations.push(animationIdle4);
               
-        //       currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+        //       //se a animation-5 existe e está em animation-3, pode ativar animation-5
+        //       if (animationIdle5 && currentIdleAnimation === animationIdle3 && Math.random() < 0.3) {
+        //         currentIdleAnimation = animationIdle5;
+        //       } else {
+        //         currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
+        //       }
+              
         //       img.src = chrome.runtime.getURL(currentIdleAnimation);
         //     }
         //   }, 5000 + Math.random() * 5000);
         // }
-
-        // adicionei animação 5, caso esteja na animação 3
-        //alternar as animações aleatoriamente
         if (animationIdle3 || animationIdle4) {
           animationInterval = setInterval(() => {
             if (!isDragging) {
@@ -236,10 +266,15 @@ if (typeof chrome !== 'undefined' && chrome.storage) {
               if (animationIdle3) availableAnimations.push(animationIdle3);
               if (animationIdle4) availableAnimations.push(animationIdle4);
               
-              //se a animation-5 existe e está em animation-3, pode ativar animation-5
+              // Se animation-5 existe e está em animation-3, pode ativar animation-5
               if (animationIdle5 && currentIdleAnimation === animationIdle3 && Math.random() < 0.3) {
                 currentIdleAnimation = animationIdle5;
-              } else {
+              }
+              // Se animation-6 existe e está em animation-1, pode ativar animation-6
+              else if (animationIdle6 && currentIdleAnimation === animationIdle1 && Math.random() < 0.3) {
+                currentIdleAnimation = animationIdle6;
+              } 
+              else {
                 currentIdleAnimation = availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
               }
               
