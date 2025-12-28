@@ -33,7 +33,7 @@
     {
       "resources": [
         "images/*.png",
-        
+
         "images/coracao/*.png",
         "images/coracao/coracao300.png",
 
@@ -91,6 +91,14 @@
         "images/gatos/animation-5/gato-preto-dormindo.png",
         "images/gatos/animation-5/gato-siames-dormindo.png",
         "images/gatos/animation-5/gato-malhado-cinza-dormindo.png",
+
+
+        // animacao deitado (animation-6)
+        "images/gatos/animation-6/gato-preto-banho.png",
+        "images/gatos/animation-6/gato-siames-banho.png",
+        "images/gatos/animation-6/gato-branco-banho.png",
+        "images/gatos/animation-6/gato-branco-mancha-preta-laranja-banho.png",
+        "images/gatos/animation-6/gato-branco-manchas-pretas-banho.png",
       
         
         
