@@ -50,7 +50,7 @@ const catImages = [
   //gato fantasma
   {
     preview: 'images/img-padrao/gato-fantasma.png',
-    animation: 'images/gatos/animation-1/fantasma/gato-fantasma1.png'
+    animation: 'images/gatos/animation-1/gato-fantasma.png'
   },
 ];
 
@@ -327,18 +327,34 @@ addCatButton.addEventListener('click', () => {
             //ajustar a animação 2 dos gatos
             if (animationCarried.includes('preto.png') && !animationCarried.includes('branco')) {
               animationCarried = animationCarried.replace('preto.png', 'gato-preto-carregado.png');
-            } else if (animationCarried.includes('branco.png') && !animationCarried.includes('manchas') && !animationCarried.includes('mancha') && !animationCarried.includes('malhado')) {
+            } 
+            
+            else if (animationCarried.includes('branco.png') && !animationCarried.includes('manchas') && !animationCarried.includes('mancha') && !animationCarried.includes('malhado')) {
               animationCarried = animationCarried.replace('branco.png', 'gato-branco-carregado.png');
-            } else if (animationCarried.includes('siames.png')) {
+            } 
+            
+            else if (animationCarried.includes('siames.png')) {
               animationCarried = animationCarried.replace('siames.png', 'gato-siames-carregado.png');
-            } else if (animationCarried.includes('gato-branco-mancha-laranja-preto.png')) {
+            } 
+            
+            else if (animationCarried.includes('gato-branco-mancha-laranja-preto.png')) {
               animationCarried = animationCarried.replace('gato-branco-mancha-laranja-preto.png', 'gato-branco-mancha-laranja-preto-carregado.png');
-            } else if (animationCarried.includes('branco-manchas-pretas.png')) {
+            } 
+            
+            else if (animationCarried.includes('branco-manchas-pretas.png')) {
               animationCarried = animationCarried.replace('branco-manchas-pretas.png', 'gato-branco-preto-carregado.png');
-            } else if (animationCarried.includes('gato-laranja.png')) {
+            } 
+            
+            else if (animationCarried.includes('gato-laranja.png')) {
               animationCarried = animationCarried.replace('gato-laranja.png', 'gato-laranja-carregado.png');
-            } else if (animationCarried.includes('branco-malhado-cinza.png')) {
+            } 
+            
+            else if (animationCarried.includes('branco-malhado-cinza.png')) {
               animationCarried = animationCarried.replace('branco-malhado-cinza.png', 'gato-branco-malhado-carregado.png');
+            }
+            
+            else if (animationCarried.includes('gato-fantasma.png')) {
+            animationCarried = animationCarried.replace('gato-fantasma.png', 'gato-fantasma.png');
             }
 
 
